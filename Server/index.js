@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const app = express();
+const cors = require('cors');
 const port=3000;
 
 app.use(bodyParser.json());
+app.use(cors());
 
 const Secret = "SuperSecret3";
 
@@ -47,7 +49,7 @@ try{
     };
   newTodo = new todoModel(task);
   await newTodo.save();
-  res.status(201).json({message: "Successfully Registered"});
+  res.status(201).json(task);
 } catch(error) {
     res.status(500).json({message: error.message})
 }
