@@ -1,0 +1,11 @@
+@font-face {
+   font-family: "Roboto";
+   src: local("roboto-regular") 
+   url(todo-frontend\src\assets\fonts\Roboto-Medium.ttf);
+}
+
+.roboto-regular{
+   font-family: "Roboto", sans-serif;
+   font-weight: 500;
+   font-style: normal
+}
