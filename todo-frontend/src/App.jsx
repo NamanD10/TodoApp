@@ -5,13 +5,16 @@ import Todo from "./components/Todo"
 
 
 
+
 function App() {
   const [Todos , setTodos] = useState([]);
   const [isView , setIsView] = useState(false);
-  const [toView , setToView] = useState({});
+  const [toView , setToView] = useState(null);
+  const [formTitle, setFormTitle] = useState("");
+  const [formDescription, setFormDescription] = useState("");
  
   const getTodos = async() => {
-    console.log(import.meta.env.VITE_BASE_URL);
+
     try{
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/todos`);
       
@@ -29,10 +32,10 @@ function App() {
     try{
        const todo = await axios.get(`${import.meta.env.VITE_BASE_URL}/todos/${id}`)  ;
       if(todo){
-       setIsView(true);
-       setToView(todo.data);
-       console.log(todo.data);
-       
+        setToView(todo.data);
+        setFormTitle(todo.data.title);
+        setFormDescription(todo.data.description);      
+        setIsView(true);
       }   
     } catch(e){
       console.log(`Some error occured ${e.message}`);
@@ -51,33 +54,48 @@ function App() {
     }
   };
 
-const TodoItems = Todos.map((todo => 
-  <li key={todo._id}>
-    
-    <h3>{todo.title}</h3>
-    <p>{todo.description}</p>
-    <button onClick={() => onViewClick(todo._id)}>View</button>
-    <button onClick={() => onDeleteClick(todo._id)}>DONE</button>
-  </li>
-))
+
+  const handleSave = async (updatedTodo) => {
+    try {
+      const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/todos/${toView._id}`, updatedTodo);
+      if (response) {
+        setIsView(false);
+        setToView(null);
+        getTodos();
+      }
+    } catch (e) {
+      console.log(`Some error occurred ${e.message}`);
+    }
+  };
+
+
 
 useEffect(() => {
   getTodos();
-}, []);
+}, [Todos , isView , toView]);
 
   return (
     <>  
-      {isView ? 
+      {isView && toView ? 
       (<>
-        {console.log("here is the todo to view: " + JSON.stringify(toView))}
-        <Todo {...toView}></Todo>
+         <Todo 
+          title={formTitle}
+          description={formDescription}
+          setFormTitle={setFormTitle}
+          setFormDescription={setFormDescription}
+          onSave={handleSave}
+        />
       </>)  
     : (<>
-      <h1 className='roboto-regular'>These are your todos: </h1>   
-      <ul>
-        {TodoItems}
-
-      </ul>
+      <h1>These are your todos: </h1>
+      {Todos.map((todo) => (
+              <li key={todo._id}>
+                <h3>{todo.title}</h3>
+                <p>{todo.description}</p>
+                <button onClick={() => onViewClick(todo._id)}>View</button>
+                <button onClick={() => onDeleteClick(todo._id)}>DONE</button>
+              </li>
+            ))}
     </>)}
     </>
   )
