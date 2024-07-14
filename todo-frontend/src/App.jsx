@@ -84,19 +84,23 @@ useEffect(() => {
           setFormTitle={setFormTitle}
           setFormDescription={setFormDescription}
           onSave={handleSave}
+          className='todo'
         />
       </>)  
-    : (<>
+    : (<div className='get-todos'>
       <h1>These are your todos: </h1>
-      {Todos.map((todo) => (
-              <li key={todo._id}>
-                <h3>{todo.title}</h3>
-                <p>{todo.description}</p>
-                <button onClick={() => onViewClick(todo._id)}>View</button>
-                <button onClick={() => onDeleteClick(todo._id)}>DONE</button>
-              </li>
-            ))}
-    </>)}
+      <ul className='todos-list'>
+        {Todos.map((todo) => (
+                <li className='todo' key={todo._id}>
+                  <h3>{todo.title}</h3>
+                  <p>{todo.description}</p>
+                  <div className='button-area'><button className='button' onClick={() => onViewClick(todo._id)}>View</button>
+                  <button className='button' onClick={() => onDeleteClick(todo._id)}>DONE</button>
+                  </div>
+                </li>
+              ))}
+      </ul>      
+    </div>)}
     </>
   )
 
