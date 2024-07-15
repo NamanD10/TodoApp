@@ -2,6 +2,7 @@ import { useState , useEffect } from 'react'
 import './App.css'
 import axios from "axios"
 import Todo from "./components/Todo"
+import AddTodo from './components/AddTodo';
 
 
 
@@ -10,6 +11,7 @@ function App() {
   const [Todos , setTodos] = useState([]);
   const [isView , setIsView] = useState(false);
   const [toView , setToView] = useState(null);
+  const [isAdd , setIsAdd] = useState(false);
   const [formTitle, setFormTitle] = useState("");
   const [formDescription, setFormDescription] = useState("");
  
@@ -54,6 +56,13 @@ function App() {
     }
   };
 
+  const onAddClick = () =>{ 
+    return(
+      <>
+        <AddTodo />
+      </>
+    )
+  }
 
   const handleSave = async (updatedTodo) => {
     try {
@@ -86,6 +95,7 @@ useEffect(() => {
           onSave={handleSave}
           className='todo'
         />
+        <button className='button' onClick={()=>setIsView(false)}>Home</button>
       </>)  
     : (<div className='get-todos'>
       <h1>These are your todos: </h1>
@@ -101,6 +111,12 @@ useEffect(() => {
               ))}
       </ul>      
     </div>)}
+    <div>
+      <button style={{}} className='button' onClick={()=>setIsAdd(true)}>Add Todo</button>
+      {
+        isAdd && <><AddTodo/></>
+      }      
+    </div>
     </>
   )
 
