@@ -11,7 +11,6 @@ function App() {
   const [Todos , setTodos] = useState([]);
   const [isView , setIsView] = useState(false);
   const [toView , setToView] = useState(null);
-  const [isAdd , setIsAdd] = useState(false);
   const [formTitle, setFormTitle] = useState("");
   const [formDescription, setFormDescription] = useState("");
  
@@ -55,14 +54,6 @@ function App() {
       console.log(`Some error occured ${e.message}`);
     }
   };
-
-  const onAddClick = () =>{ 
-    return(
-      <>
-        <AddTodo />
-      </>
-    )
-  }
 
   const handleSave = async (updatedTodo) => {
     try {
@@ -111,11 +102,9 @@ useEffect(() => {
               ))}
       </ul>      
     </div>)}
-    <div>
-      <button style={{}} className='button' onClick={()=>setIsAdd(true)}>Add Todo</button>
-      {
-        isAdd && <><AddTodo/></>
-      }      
+    <div style={{marginTop: "10px"}}>
+      <span style={{marginBottom:"10px", fontSize:"20px" }}>Add Todo: </span>
+      <AddTodo/>            
     </div>
     </>
   )
