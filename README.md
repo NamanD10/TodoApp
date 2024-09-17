@@ -1,2 +1,2 @@
-Project Completed
+Ignore the frontend code for now
 Thanks

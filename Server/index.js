@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config(); 
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -18,7 +19,7 @@ const todoSchema = new mongoose.Schema({
 });
 
 const todoModel = mongoose.model('todoModel' , todoSchema);
-mongoose.connect('mongodb+srv://namandubey10:DeuhNWpSt6fSuzRr@cluster0.cdjoyuj.mongodb.net/TodoApp');
+mongoose.connect(dotenv.parsed.CONNECTIONURL);
 
 
 app.get('/todos', async (req, res) => {   
