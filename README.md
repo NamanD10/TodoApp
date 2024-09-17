@@ -1,2 +1,1 @@
-Ignore the frontend code for now
-Thanks
+Simple todo app with CRUD functionality and dynamic UI
